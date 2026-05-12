@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --color-natural-bg: #F5F2ED;
+  --color-natural-text: #4A443F;
+  --color-natural-muted: #9A8F84;
+  --color-natural-leaf: #7D9D85;
+  --color-natural-earth: #D68060;
+  --color-natural-sand: #E6D5B8;
+}
+
+@layer base {
+  body {
+    @apply bg-natural-bg text-natural-text overflow-hidden h-screen w-screen;
+    touch-action: manipulation;
+  }
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* Landscape warning visibility */
+@media (orientation: landscape) and (max-height: 500px) {
+  #landscape-warning {
+    display: flex !important;
+  }
+}

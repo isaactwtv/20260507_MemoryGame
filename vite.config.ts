@@ -4,7 +4,7 @@ import path from 'path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  base: './',
+  base: '/20260507_MemoryGame/',
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {

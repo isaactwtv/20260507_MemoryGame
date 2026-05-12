@@ -1,8 +1,3 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { 
   Dog, Cat, Bird, Fish, Apple, Banana, TreePine, Moon, 

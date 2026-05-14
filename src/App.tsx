@@ -135,7 +135,7 @@ export default function App() {
           ));
           setFlippedCards([]);
           setIsProcessing(false);
-        }, 1500);
+        }, 1000);
       }
     }
   };

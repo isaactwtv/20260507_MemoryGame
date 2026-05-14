@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { 
-  Dog, Cat, Bird, Fish, Apple, Banana, TreePine, Moon, 
+import {
+  Dog, Cat, Bird, Fish, Apple, Banana, TreePine, Moon,
   Play, RotateCcw, AlertTriangle, Trophy, Timer, FlipHorizontal, Heart
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'motion/react';
 // Game Constants
 const INITIAL_TIME = 45;
 const INITIAL_CHANCES = 20;
-const BONUS_TIME = 15;
+const BONUS_TIME = 5;
 
 // Card Icons
 const ICON_POOL = [
@@ -92,12 +92,12 @@ export default function App() {
   // Handle Card Click
   const handleCardClick = (id: number) => {
     if (isProcessing || gameState !== 'PLAYING') return;
-    
+
     const card = cards.find(c => c.id === id);
     if (!card || card.isFlipped || card.isMatched) return;
 
     // Flip the card
-    const updatedCards = cards.map(c => 
+    const updatedCards = cards.map(c =>
       c.id === id ? { ...c, isFlipped: true } : c
     );
     setCards(updatedCards);
@@ -108,7 +108,7 @@ export default function App() {
     if (nextFlipped.length === 2) {
       setIsProcessing(true);
       setChances(prev => prev - 1);
-      
+
       const [firstId, secondId] = nextFlipped;
       const firstCard = cards.find(c => c.id === firstId)!;
       const secondCard = updatedCards.find(c => c.id === secondId)!;
@@ -116,9 +116,9 @@ export default function App() {
       if (firstCard.iconId === secondCard.iconId) {
         // Match Found
         setTimeout(() => {
-          setCards(prev => prev.map(c => 
-            c.id === firstId || c.id === secondId 
-              ? { ...c, isMatched: true } 
+          setCards(prev => prev.map(c =>
+            c.id === firstId || c.id === secondId
+              ? { ...c, isMatched: true }
               : c
           ));
           setTimeLeft(prev => prev + BONUS_TIME);
@@ -128,9 +128,9 @@ export default function App() {
       } else {
         // Match Failed
         setTimeout(() => {
-          setCards(prev => prev.map(c => 
-            c.id === firstId || c.id === secondId 
-              ? { ...c, isFlipped: false } 
+          setCards(prev => prev.map(c =>
+            c.id === firstId || c.id === secondId
+              ? { ...c, isFlipped: false }
               : c
           ));
           setFlippedCards([]);
@@ -143,8 +143,8 @@ export default function App() {
   return (
     <div className="relative w-full h-screen bg-natural-bg font-sans flex flex-col items-center justify-center p-4">
       {/* Landscape Warning Overlay */}
-      <div 
-        id="landscape-warning" 
+      <div
+        id="landscape-warning"
         className="hidden fixed inset-0 z-50 bg-natural-bg text-natural-text flex-col items-center justify-center text-center p-8 space-y-4"
       >
         <AlertTriangle className="w-16 h-16 text-natural-earth animate-pulse" />
@@ -154,7 +154,7 @@ export default function App() {
 
       <AnimatePresence mode="wait">
         {gameState === 'HOME' && (
-          <motion.div 
+          <motion.div
             key="home"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -164,18 +164,18 @@ export default function App() {
             <div className="relative inline-block">
               <div className="absolute inset-0 bg-natural-leaf/10 rounded-full blur-3xl opacity-50" />
               <div className="relative grid grid-cols-2 gap-4 bg-natural-bg p-6 rounded-2xl border border-natural-sand/50">
-                 <Dog className="text-natural-earth w-12 h-12" />
-                 <Cat className="text-yellow-600 w-12 h-12" />
-                 <Apple className="text-red-600 w-12 h-12" />
-                 <TreePine className="text-natural-leaf w-12 h-12" />
+                <Dog className="text-natural-earth w-12 h-12" />
+                <Cat className="text-yellow-600 w-12 h-12" />
+                <Apple className="text-red-600 w-12 h-12" />
+                <TreePine className="text-natural-leaf w-12 h-12" />
               </div>
             </div>
-            
+
             <div>
               <h1 className="text-5xl font-extrabold text-natural-text tracking-tight mb-4">記憶翻牌遊戲</h1>
               <p className="text-natural-muted leading-relaxed text-lg">
                 卡片圖案包含可愛的小動物與物品，<br />
-                每當成功配對一對圖卡，將增加 <span className="text-natural-leaf font-bold">15秒</span> 的時間！
+                每當成功配對一對圖卡，將增加 <span className="text-natural-leaf font-bold">5秒</span> 的時間！
               </p>
             </div>
 
@@ -202,7 +202,7 @@ export default function App() {
         )}
 
         {gameState === 'PLAYING' && (
-          <motion.div 
+          <motion.div
             key="game"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -238,7 +238,7 @@ export default function App() {
             <div className="flex-grow flex items-center justify-center p-2">
               <div className="grid grid-cols-4 gap-3 sm:gap-5 w-full max-h-[60vh] aspect-square">
                 {cards.map((card) => (
-                  <div 
+                  <div
                     key={card.id}
                     className="perspective-1000 w-full h-full"
                     onClick={() => handleCardClick(card.id)}
@@ -252,7 +252,7 @@ export default function App() {
                           <card.Icon className={`w-10 h-10 sm:w-14 sm:h-14 ${card.color}`} />
                         </motion.div>
                         {card.isMatched && (
-                          <motion.div 
+                          <motion.div
                             initial={{ opacity: 0, scale: 0 }}
                             animate={{ opacity: 1, scale: 1 }}
                             className="absolute -top-1.5 -right-1.5 bg-natural-leaf text-white p-1.5 rounded-full border-2 border-white shadow-md"
@@ -277,20 +277,20 @@ export default function App() {
                 ))}
               </div>
             </div>
-            
+
             <div className="mt-8 flex justify-center">
-               <button 
+              <button
                 onClick={() => setGameState('HOME')}
                 className="text-natural-muted font-bold hover:text-natural-text flex items-center gap-2.5 transition-colors text-lg"
-               >
-                 <RotateCcw className="w-5 h-5" /> 放棄遊戲
-               </button>
+              >
+                <RotateCcw className="w-5 h-5" /> 放棄遊戲
+              </button>
             </div>
           </motion.div>
         )}
 
         {(gameState === 'WON' || gameState === 'LOST') && (
-          <motion.div 
+          <motion.div
             key="result"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -305,8 +305,8 @@ export default function App() {
                 {gameState === 'WON' ? '配對大成功！' : '挑戰失敗...'}
               </h2>
               <p className="text-natural-muted text-xl">
-                {gameState === 'WON' 
-                  ? `太厲害了！你在還剩 ${timeLeft} 秒及 ${chances} 次機會時完成。` 
+                {gameState === 'WON'
+                  ? `太厲害了！你在還剩 ${timeLeft} 秒及 ${chances} 次機會時完成。`
                   : chances <= 0 ? '機會已經用完。' : '時間已經歸零。'}
               </p>
             </div>
@@ -315,16 +315,15 @@ export default function App() {
               <button
                 id="play-again"
                 onClick={initGame}
-                className={`w-full font-bold py-6 rounded-3xl shadow-lg transition-all active:scale-95 flex items-center justify-center gap-3 text-2xl ${
-                  gameState === 'WON' 
-                  ? 'bg-natural-leaf text-white' 
-                  : 'bg-natural-earth text-white'
-                }`}
+                className={`w-full font-bold py-6 rounded-3xl shadow-lg transition-all active:scale-95 flex items-center justify-center gap-3 text-2xl ${gameState === 'WON'
+                    ? 'bg-natural-leaf text-white'
+                    : 'bg-natural-earth text-white'
+                  }`}
               >
                 <RotateCcw className="w-8 h-8" /> 再戰一局
               </button>
-              
-              <button 
+
+              <button
                 onClick={() => setGameState('HOME')}
                 className="w-full text-natural-muted font-bold hover:text-natural-text transition-colors text-xl"
               >
